@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Javvu Candy </title>
+</head>
+<body>
+<div class="message-container">
+    <IMG SRC=# id=myImg alt="Iam image">
+  </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+<script type="text/javascript">
+   var socket = io.connect('http://' + document.domain + ':' + location.port);
+   socket.on('connect',function(){
+    console.log("successfully connected")
+   })
+    socket.on('my response',function(image){
+     console.log("inside image")
+     console.log(image)
+     $('IMG').append(document.getElementById("myImg").src=image.number)
+    })
+</script>
+</body>
+</html>

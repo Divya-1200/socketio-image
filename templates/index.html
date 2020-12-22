@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Javvu Candy </title>
+</head>
+<body>
+  <form action="/" method="POST">
+    <input type="file" id="files" class="picture"  name="file[]" autocomplete="off" multiple required />
+    <input type="submit"/>
+    
+  </form>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+  <script type="text/javascript">
+   var socket = io.connect('http://' + document.domain + ':' + location.port);
+   socket.on('connect',function(){
+    console.log("successfully connected")
+   })
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+    var counter=0;
+    function handleFileSelect(ele){
+      
+      // while(ele.length--){
+        
+      // }
+      var file = ele.target.files[0];
+      console.log(file)
+      var fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () =>{
+        var arrayBuffer = fileReader.result;
+
+        console.log(arrayBuffer)
+        var form = $('form').on('submit',function(e){
+          console.log(file.name)
+          console.log("inside function")
+          e.preventDefault()
+          socket.emit('my event',{
+          number:arrayBuffer
+        })
+        $('input.picture').val('').focus()
+        })
+        
+
+      }
+    } 
+    
+
+  </script>
+</body>
+</html>
